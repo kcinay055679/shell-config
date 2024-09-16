@@ -1,7 +1,9 @@
 echo ".cfg" >> .gitignore
 git clone --bare git@github.com:kcinay055679/shell-config.git $HOME/.cfg
 
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+config(){
+   /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
+}
 
 
 
