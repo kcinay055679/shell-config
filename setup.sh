@@ -1,3 +1,4 @@
+cd ~
 echo ".cfg" >> .gitignore
 git clone --bare git@github.com:kcinay055679/shell-config.git $HOME/.cfg
 
@@ -5,15 +6,21 @@ config(){
    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 
+cf(){
+   config $@
+}
 
+cfco(){
+  cf checkout -- $(cf diff --name-only | grep -E -v "README.md|setup.sh")
+}
 
 mkdir -p .config-backup
-config checkout
+cfco
 if [ $? = 0 ]; then
   echo "Checked out config.";
   else
     echo "Backing up pre-existing dot files.";
-    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+    cfco 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
 fi;
-config checkout
+cfco
 config config status.showUntrackedFiles no
