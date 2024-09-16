@@ -1,0 +1,60 @@
+[user]
+	name = Yanick Minder
+	email = minder@puzzle.ch
+	
+[alias]
+    co = checkout
+    coo = !git fetch && git checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
+    aa = add -A 
+	au = add -u
+    cob = checkout -b
+    cm = commit -m
+    cood = "!f() { git fetch $1 && git br -D $1 git co $1}; f"
+	current = rev-parse --abbrev-ref HEAD
+	currentOrigin = rev-parse --abbrev-ref --symbolic-full-name @{u}
+	squashBranch = !git reset $(git merge-base master $(git current))
+	lock = update-index --skip-worktree
+	unlock = update-index --no-skip-worktree
+	pullf = !git fetch && git reset --hard $(git currentOrigin)
+	runCheck = !git stash && git commit --allow-empty -m 'Trigger workflow' && git push && git stash pop
+	clear = !git restore --worktree --staged .
+	sb = squashBranch
+	amend = commit --amend --no-edit
+[core]
+	autocrlf = input
+	excludesfile = /home/yanickminder/.config/git/ignore
+	pager = diff-so-fancy | less --tabs=4 -RF
+[init]
+	defaultBranch = main
+[diff]
+    tool = idea
+[difftool "idea"]
+    cmd = idea diff $LOCAL $REMOTE
+[merge]
+    tool = idea
+[mergetool "idea"]
+    cmd = idea merge $LOCAL $REMOTE $BASE $MERGED
+    trustExitCode = true 
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
