@@ -1,8 +1,10 @@
 echo ".cfg" >> .gitignore
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias cf=config
-
 git clone --bare git@github.com:kcinay055679/shell-config.git $HOME/.cfg
+function config {
+   /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
+}
+
+
 
 mkdir -p .config-backup
 config checkout
