@@ -256,6 +256,7 @@ alias "bfg"="java -jar /etc/bfg/bfg-1.14.0.jar"
 
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias cf=config
 
 export UID GID
 
