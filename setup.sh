@@ -1,4 +1,7 @@
 cd ~
+GIT_NAME=$(git config user.name)
+GIT_EMAIL=$(git config user.email)
+
 echo ".cfg" >> .gitignore
 git clone --bare git@github.com:kcinay055679/shell-config.git $HOME/.cfg
 
@@ -24,3 +27,5 @@ if [ $? = 0 ]; then
 fi;
 cfco
 config config status.showUntrackedFiles no
+git config --global user.name $GIT_NAME
+git config --global user.email $GIT_EMAIL
