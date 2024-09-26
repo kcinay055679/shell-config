@@ -128,13 +128,11 @@ dcexecf() {
     sh -c "docker compose exec -it $container $command"
 }
 
-gi(){
-    if [[ $@ == "tpush" ]]; then
-        git push
-    fi
-}
-
-
+# gi() {
+#     if [[ $@ == "tpush" ]]; then
+#         git push
+#     fi
+# }
 
 
 killp(){ 
@@ -142,13 +140,14 @@ killp(){
 }
 
 sha-384(){
-    cat "$1"| openssl dgst -sha384 -binary | openssl base64 -A
+   echo "sha384-$(cat "$1" | openssl dgst -sha384 -binary | openssl base64 -A)" | c | v
 }
 
 alias "sha384"="sha-384"
 
 alias "sha"="sha-384"
 
+# navigation
 alias "home"='cd ~'
 
 alias "cd.."='cd ..'
@@ -167,6 +166,12 @@ alias "mc"="mkdircd"
 
 alias "cm"="mc"
 
+
+# git
+alias g="git"
+
+alias gi="git"
+
 alias gc='git checkout'
 
 alias gf='git fetch'
@@ -181,6 +186,17 @@ alias gpull='git pull'
 
 alias gs='git status'
 
+alias gac='git aa && git commit -m'
+
+alias gacp='git aa && git commit -m && git push'
+
+alias empty='git commit --allow-empty -m "Trigger deployment" && push'
+
+alias gcrename="git commit --allow-empty --amend -m"
+
+alias gr=grename
+
+# System
 alias cls=clear
 
 alias shut10='sleep 10; shutdown -h now'
@@ -190,8 +206,6 @@ alias shutnow='shutdown -h now'
 alias shut='shutdown +1'
 
 alias a='shutdown -c'
-
-alias empty='git commit --allow-empty -m "Trigger deployment" && push'
 
 alias lock='gnome-screensaver-command -l'
 
@@ -209,11 +223,10 @@ alias reload="source ~/.zshrc"
 
 alias rl=reload
 
-alias "ocAll"=oc_apply_all
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-alias "gcrename"="git commit --allow-empty --amend -m"
+alias cf=config
 
-alias "gr"=grename
 
 # docker aliases
 
@@ -231,9 +244,6 @@ alias "dcd"="docker compose down"
 alias "dcdv"="docker compose down -v"
 
 alias "dcud"="docker compose up -d"
-
-
-
 
 # yarn aliases
 alias "yarnr"="yarn cache clean && rm -rf node_modules && yarn"
@@ -255,8 +265,7 @@ alias "cprept"="cpreptest"
 alias "bfg"="java -jar /etc/bfg/bfg-1.14.0.jar"
 
 
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias cf=config
+
 
 export UID GID
 
@@ -301,7 +310,3 @@ fi
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
-
-
-
-
