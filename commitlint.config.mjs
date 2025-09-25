@@ -4,6 +4,7 @@ const BTF_ISSUE_REGEX = /(BTF\-\d{1,10})(?=\-|$)/;
 const DEFAULT_ISSUE_REGEX = /(\d{3,})/;
 
 const ALL_REGEX = [BTF_ISSUE_REGEX, DEFAULT_ISSUE_REGEX];
+const COMMIT_AMOUNT_FOR_SCOPES = 20
 
 const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 const issue = ALL_REGEX
@@ -16,16 +17,18 @@ const angular_projects = execSync("ng config projects | jq -r 'keys[]'").toStrin
 
 const maven_projects = execSync(`awk -F'[<>]' '/<module>/{print $3}' "$(git rev-parse --show-toplevel)/pom.xml" 2>/dev/null || true`).toString().trim().split('\n')
 
-//const current_maven = execSync("mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout").toString().trim();
-const last_used_scope = execSync('git log -1 --pretty=%B | sed -nE "s/^[a-z]+\\(([^)]+)\\):.*/\\1/p"').toString().trim();
+let last_used_scopes = execSync(`git log -${COMMIT_AMOUNT_FOR_SCOPES} --pretty=%B | sed -nE "s/^[a-z]+\\(([^)]+)\\):.*/\\1/p"`).toString().trim();
+last_used_scopes = last_used_scopes.split("\n")
+const last_used_scope = last_used_scopes[0] ?? "" 
 
 
 const default_scopes = ['frontend', 'backend', 'db'];
-let scopes = angular_projects.concat(default_scopes);
+let scopes = [];
+scopes = scopes.concat(default_scopes);
+scopes = scopes.concat(angular_projects);
 scopes = scopes.concat(maven_projects);
-//if(!current_maven.startsWith("standalone-pom")){
-  //scopes.push(current_maven);
-//}
+scopes = scopes.concat(last_used_scopes);
+
 scopes = [...new Set(scopes)]
 
 /** @type {import('cz-git').UserConfig} */
@@ -46,7 +49,9 @@ const config = {
   alias: {
     "fd": "docs: fix typos",
     "ur": "docs: update README",
-    ":": "docs(blog): update posts"
+    ":": "docs(blog): update posts",
+    "cl": "style: clean up",
+    "b": "chore: run pipeline"
   }
 };
 

@@ -327,7 +327,7 @@ alias "cprept"="cpreptest"
 
 alias "bfg"="java -jar /etc/bfg/bfg-1.14.0.jar"
 alias "vpn:bls"="sudo -E gpclient connect --browser default https://access-partner.bls.ch --hip"
-alias "brst"="BrowserStackLocal --key PMWnGpkpwVBKoNz3a3m6 --force-local"
+alias "brst"="echo 'Key is : PMWnGpkpwVBKoNz3a3m6' && BrowserStackLocal --key PMWnGpkpwVBKoNz3a3m6 --force-local"
 alias "brstlo"=brst
 alias "brStLo"=brst
 
@@ -339,9 +339,9 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PLANTUML_JAR=~/.local/bin/plantuml.jar
 
-
 ## asdf
-fpath=(${ASDF_DIR}/completions $fpath)
+fpath=(${ASDF_DIR}/completions $fpath ~/.oh-my-zsh/completions)
+
 plugins=(colorize git nodejs python ruby rust terraform kubectl helm aws gcloud kubectx kubens docker docker-compose zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
 #plugins=(colorize git nodejs python ruby rust terraform kubectl helm aws gcloud kubectx kubens docker docker-compose)
 ASDF_DATA_DIR=/home/yminder/.asdf

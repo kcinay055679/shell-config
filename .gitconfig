@@ -8,7 +8,7 @@
     ci = commit
 	cc = czg
 	ccr = !git ra && czg --retry
-	ra = "!!git diff --name-only --cached | xargs -l git add"  
+	ra = "!git diff --name-only --cached | xargs -l git add"  
 	acc = "!!g add && g cc "
 	accr = "!!g add && g ccr "
 	ccc = "!czg --retry && git commit --amend"
@@ -19,6 +19,7 @@
     type = cat-file -t
     dump = cat-file -p
     aa = add -A 
+    aaa = !git aa && git amend
 	au = add -u
     cob = checkout -b
     cm = commit -m
@@ -36,6 +37,8 @@
     set-latest-date = "!f() { GIT_COMMITTER_DATE=\"$1\" git commit --date=\"$1\" --amend --no-edit --allow-empty; }; f"
 	pfusch = push --force-with-lease
 	prune-branches = !git fetch -p && git branch -vv | grep \": gone]\" | cut -d \" \" -f 1 | xargs git branch -D
+	brn = "!f() { old_name=$(git branch --show-current); git branch -m \"$1\" && git push origin -u \"$1\" && git push origin --delete \"$old_name\"; }; f"
+	bbrn = "!f() { git branch -m \"$1\" \"$2\" && git push origin -u \"$2\" && git push origin --delete \"$1\"; }; f"
 [core]
 	autocrlf = input
 	excludesfile = /home/yanickminder/.config/git/ignore
