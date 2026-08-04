@@ -276,3 +276,6 @@ esac
 # pnpm end
 
 source <(ng completion script) 
+
+# opencode
+export PATH=/home/yminder/.opencode/bin:$PATH
